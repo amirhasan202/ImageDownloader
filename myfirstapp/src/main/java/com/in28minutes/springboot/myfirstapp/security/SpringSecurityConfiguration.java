@@ -2,17 +2,16 @@ package com.in28minutes.springboot.myfirstapp.security;
 
 
 
-import java.util.function.Function;
-import static org.springframework.security.config.Customizer.withDefaults;
-import org.springframework.context.annotation.Bean;
+//import java.util.function.Function;
+//import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.SecurityFilterChain;
+//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+//import org.springframework.security.core.userdetails.User;
+//import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+//import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SpringSecurityConfiguration 
@@ -22,65 +21,65 @@ public class SpringSecurityConfiguration
 //	InMemoryUserDetailsManager(UserDetails...users)
 	
 	///////////////////////////////////////////////////////////////////////////////////
-	@Bean
-	public InMemoryUserDetailsManager createUserDetailsManager()
-	{
-		
-		UserDetails userDetails =  createNewUser("in28minutes", "dummy");
-		UserDetails userDetails1 =  createNewUser("ranga", "dummydummy");
-		
-		
-		return new InMemoryUserDetailsManager(userDetails , userDetails1);
-	}
-
-	
-	//////////////////////////////////////////////////////////////////////////////////
-	private UserDetails createNewUser(String username, String password) 
-	{
-		Function <String , String> passwordEncoder
-		= input -> PE().encode(input);
-		
-	
-		UserDetails userDetails = User.builder()
-										.passwordEncoder(passwordEncoder)
-										.username(username)
-										.password(password)
-										.roles("USER" , "ADMIN")
-										.build();
-		return userDetails;
-	}
-	
-	//////////////////////////////////////////////////////////////////////////////////
-	@Bean
-	public PasswordEncoder PE()
-	{
-		return new BCryptPasswordEncoder();
-	}
-	
-	
-	////////////////////////////////////////////////////////////////////////////////
-	
-	@SuppressWarnings("removal")
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception 
-	{
-		
-		http.authorizeHttpRequests(
-				auth -> auth.anyRequest().authenticated());
-		
-		http.formLogin(withDefaults());
-		
+//	@Bean
+//	public InMemoryUserDetailsManager createUserDetailsManager()
+//	{
 //		
-		http.csrf().disable();
-		http.headers().frameOptions().disable();
-		
-		
-		
-		
-		return http.build();
-		
-		
-	}
+//		UserDetails userDetails =  createNewUser("in28minutes", "dummy");
+//		UserDetails userDetails1 =  createNewUser("ranga", "dummydummy");
+//		
+//		
+//		return new InMemoryUserDetailsManager(userDetails , userDetails1);
+//	}
+//
+//	
+//	//////////////////////////////////////////////////////////////////////////////////
+//	private UserDetails createNewUser(String username, String password) 
+//	{
+//		Function <String , String> passwordEncoder
+//		= input -> PE().encode(input);
+//		
+//	
+//		UserDetails userDetails = User.builder()
+//										.passwordEncoder(passwordEncoder)
+//										.username(username)
+//										.password(password)
+//										.roles("USER" , "ADMIN")
+//										.build();
+//		return userDetails;
+//	}
+//	
+//	//////////////////////////////////////////////////////////////////////////////////
+//	@Bean
+//	public PasswordEncoder PE()
+//	{
+//		return new BCryptPasswordEncoder();
+//	}
+//	
+//	
+//	////////////////////////////////////////////////////////////////////////////////
+//	
+//	@SuppressWarnings("removal")
+//	@Bean
+//	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception 
+//	{
+//		
+//		http.authorizeHttpRequests(
+//				auth -> auth.anyRequest().authenticated());
+//		
+//		http.formLogin(withDefaults());
+//		
+////		
+//		http.csrf().disable();
+//		http.headers().frameOptions().disable();
+//		
+//		
+//		
+//		
+//		return http.build();
+//		
+//		
+//	}
 	
 	
 }
