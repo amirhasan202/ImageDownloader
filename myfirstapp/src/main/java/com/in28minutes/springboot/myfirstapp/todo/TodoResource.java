@@ -16,16 +16,19 @@ public class TodoResource
 {
 	private TodoService todoService;
 	
+	private TodoRepository todoRepository;
 	
-	public TodoResource(TodoService todoservices)
+	
+	public TodoResource(TodoService todoservices , TodoRepository todoRepository)
 	{
 		this.todoService=todoservices;
+		this.todoRepository = todoRepository;
 	}
 	
 	@GetMapping("/users/{username}/todos")
 	public List<Todo> retrieveTodos(@PathVariable String username)
 	{
-		return todoService.findByUsername(username);
+		return todoRepository.findByUsername(username);
 	}
 	
 	
@@ -33,14 +36,14 @@ public class TodoResource
 	public Todo retrieveTodo(@PathVariable String username 
 			, @PathVariable int id )
 	{
-		return todoService.finfById(id);
+		return todoRepository.findById(id).get();
 	}
 
 	@DeleteMapping("/users/{username}/todos/{id}")
 	public ResponseEntity<Void> DeleteTodo(@PathVariable String username 
 			, @PathVariable int id )
 	{
-		todoService.deleteById(id);
+		todoRepository.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}
 	
@@ -48,7 +51,7 @@ public class TodoResource
 	public Todo updateTodo(@PathVariable String username 
 			, @PathVariable int id , @RequestBody Todo todo)
 	{
-		todoService.updateTodo(todo);
+		todoRepository.save(todo);
 		return todo;
 	}
 	
@@ -56,9 +59,12 @@ public class TodoResource
 	public Todo createTodo(@PathVariable String username 
 			, @RequestBody Todo todo)
 	{
-		Todo createdTodo = todoService.addtodo1(username , todo.getDescription() 
-				, todo.getTargetdate() , todo.isDone() );
-		return createdTodo;
+		todo.setUsername(username);
+		todo.setId(null);
+		return todoRepository.save(todo);
+//		Todo createdTodo = todoService.addtodo1(username , todo.getDescription() 
+//				, todo.getTargetdate() , todo.isDone() );
+//		return createdTodo;
 	}
 
 	

@@ -15,7 +15,7 @@ public class Todo {
 
 	@Id
 	@GeneratedValue
-	private int id;
+	private Integer id;
 	private String username;
 	
 	@Size(min=10 , message = "Enter atleast 10 characters")
@@ -28,7 +28,7 @@ public class Todo {
 		
 	}
 
-	public Todo(int id, String username, String description, LocalDate targetdate, boolean done) {
+	public Todo(Integer id, String username, String description, LocalDate targetdate, boolean done) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -37,11 +37,11 @@ public class Todo {
 		this.done = done;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
